@@ -153,5 +153,4 @@ if __name__ == "__main__":
 
     except Exception as e:
         print(f"Error during chat: {e}")
-        print("Tool calls made: Unknown due to error")
         print("Final Answer: Error during execution")

@@ -140,22 +140,14 @@ if __name__ == "__main__":
             message=task,
         )
 
-
-
         final_answer = find_final_answer(chat_result)
         if final_answer:
             print(f"\nFinal Answer:\n{final_answer}\n")
 
             # Critic Evaluation
             critic_response = run_critic_on_output(critic_agent, task, final_answer)
-
-            try:
-                print("Critic Evaluation:")
-                print(critic_response)
-            except Exception:
-                print("Critic Evaluation:")
-                print(critic_response)
-
+            print("Critic Evaluation:")
+            print(critic_response)
         else:
             print("No final answer found.")
 

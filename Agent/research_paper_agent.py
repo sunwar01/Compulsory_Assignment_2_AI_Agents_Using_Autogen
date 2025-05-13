@@ -30,7 +30,7 @@ Begin!
 Question: {input}
 """
 
-def react_prompt_message(sender, recipient, context):
+def react_prompt_message(context):
     return ReAct_prompt.format(input=context["question"])
 
 def create_research_agent() -> AssistantAgent:

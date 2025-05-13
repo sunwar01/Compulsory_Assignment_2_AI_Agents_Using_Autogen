@@ -86,36 +86,20 @@ def setup_agents():
     return user_proxy, research_agent, critic_agent
 
 
-
-def find_final_answer(chat_result: ChatResult):
-    messages = chat_result.chat_history
-    final_answer = None
-
-    for message in reversed(messages):
+def find_final_answer(chat_result: ChatResult) -> str | None:
+    for message in reversed(chat_result.chat_history):
         content = message.get("content", "")
-        # Check for the tool response containing JSON
-        if content.startswith("[{") and content.endswith("}]"):
-            final_answer = content
-            break
-        elif content == "[]":
-            final_answer = "[]"
-            break
-        # Check for explicit Final Answer block
-        elif "Final Answer:" in content:
-            final_answer_block = message.get("content", "")
-            answer_block_lines = final_answer_block.split("\n")
-            for line in answer_block_lines:
+        # Check for tool response (JSON array)
+        if content == "[]" or (content.startswith("[") and content.endswith("]")):
+            return content
+        # Check for Final Answer block
+        if "Final Answer:" in content:
+            lines = content.split("\n")
+            for line in lines:
                 if line.startswith("Final Answer:"):
-                    final_answer = line.split("Final Answer:", 1)[1].strip()
-                    # Verify it's valid JSON
-                    try:
-                        json.loads(final_answer)
-                        break
-                    except json.JSONDecodeError:
-                        final_answer = None
-                        continue
-
-    return final_answer
+                    answer = line[len("Final Answer:"):].strip()
+                    return answer if answer else None
+    return None
 
 def run_critic_on_output(critic_agent, user_prompt, agent_output):
     critic_prompt = f"""

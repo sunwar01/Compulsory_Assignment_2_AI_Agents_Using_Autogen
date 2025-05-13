@@ -178,11 +178,10 @@ if __name__ == "__main__":
             critic_response = run_critic_on_output(critic_agent, task, final_answer)
 
             try:
-                parsed = json.loads(critic_response)
-                print("Critic Evaluation (parsed):")
-                print(json.dumps(parsed, indent=2))
+                print("Critic Evaluation:")
+                print(critic_response)
             except Exception:
-                print("Critic Evaluation (raw):")
+                print("Critic Evaluation:")
                 print(critic_response)
 
         else:

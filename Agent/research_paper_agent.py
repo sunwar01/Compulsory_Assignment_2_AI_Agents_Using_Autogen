@@ -85,18 +85,7 @@ def setup_agents():
 
     return user_proxy, research_agent, critic_agent
 
-def get_tool_calls(chat_result: ChatResult):
-    tool_call_history = []
 
-    for message in chat_result.chat_history:
-        if "tool_calls" in message.keys():
-            tool_calls = map(lambda x: {
-                "name": x["function"]["name"],
-                "arguments": ast.literal_eval(x["function"]["arguments"])
-            }, message["tool_calls"])
-            tool_call_history.extend(list(tool_calls))
-
-    return tool_call_history
 
 def find_final_answer(chat_result: ChatResult):
     messages = chat_result.chat_history
@@ -167,8 +156,7 @@ if __name__ == "__main__":
             message=task,
         )
 
-        tool_calls = get_tool_calls(chat_result)
-        print(f"Tool calls made: {len(tool_calls)}")
+
 
         final_answer = find_final_answer(chat_result)
         if final_answer:

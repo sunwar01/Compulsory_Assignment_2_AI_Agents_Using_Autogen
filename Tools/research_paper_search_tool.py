@@ -33,7 +33,7 @@ def search_research_papers(
     if year is not None and year_condition == "in":
         params["year"] = str(year)
     elif year is not None and year_condition in ["before", "after"]:
-        params["year"] = f"-{year}" if year_condition == "before" else f"{year}-"
+        params["year"] = f"-{year - 1}" if year_condition == "before" else f"{year + 1}-"
     if min_citations is not None:
         params["minCitationCount"] = min_citations
 
@@ -67,13 +67,7 @@ def search_research_papers(
             ]
 
 
-            if year is not None and year_condition in ["before", "after"]:
-                if year_condition == "in":
-                    papers = [paper for paper in papers if paper["year"] == year]
-                elif year_condition == "before":
-                    papers = [paper for paper in papers if paper["year"] < year]
-                elif year_condition == "after":
-                    papers = [paper for paper in papers if paper["year"] > year]
+
 
             return papers
 

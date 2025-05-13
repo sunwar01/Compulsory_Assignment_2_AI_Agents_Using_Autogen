@@ -159,7 +159,7 @@ Respond with a JSON object like:
 if __name__ == "__main__":
     user_proxy, research_agent, critic_agent = setup_agents()
 
-    task = "Find available research papers on machine learning published before 2020 with a minimum of 250 citations."
+    task = "Find available research papers on machine learning published in 2017 with a minimum of 250 citations."
 
     try:
         chat_result = user_proxy.initiate_chat(
